@@ -1,0 +1,23 @@
+package com.atguigu.gmall.pms.service;
+
+import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.common.bean.PageParamVo;
+
+import java.util.List;
+
+/**
+ * spu属性值
+ *
+ * @author WH
+ * @email 13665261843@qq.com
+ * @date 2020-12-14 19:00:43
+ */
+public interface SpuAttrValueService extends IService<SpuAttrValueEntity> {
+
+    PageResultVo queryPage(PageParamVo paramVo);
+
+    List<SpuAttrValueEntity> querySearchSpuAttrValueByCidAndSpuId(Long cid, Long spuId);
+}
+

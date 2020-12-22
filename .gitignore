@@ -1,5 +1,6 @@
 .idea/
 *.iml
+gmall-generator
 # Compiled class file
 *.class
 
