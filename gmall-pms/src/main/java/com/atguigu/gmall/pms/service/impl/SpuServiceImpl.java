@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     private GmallPmsClient gmallPmsClient;
     @Autowired
     private SpuDescService descService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
         IPage<SpuEntity> page = this.page(
@@ -94,7 +97,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
         //2保存sku信息
         saveSku(spu);
-
+        //消息队列
+        this.rabbitTemplate.convertAndSend("PMS_ITEM_EXCHANGE", "item.insert", spu.getId());
     }
 
     private void saveSku(SpuVo spu) {

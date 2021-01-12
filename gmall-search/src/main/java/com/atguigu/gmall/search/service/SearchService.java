@@ -120,7 +120,7 @@ public class SearchService {
                 categoryEntity.setId(bucket.getKeyAsNumber().longValue());
                 //通过子聚合获取分类名称
                 ParsedStringTerms categoryNameAgg = bucket.getAggregations().get("categoryNameAgg");
-                List<? extends Terms.Bucket> nameAggBuckets = categoryIdAgg.getBuckets();
+                List<? extends Terms.Bucket> nameAggBuckets = categoryNameAgg.getBuckets();
                 if (!CollectionUtils.isEmpty(nameAggBuckets)) {
                     categoryEntity.setName(nameAggBuckets.get(0).getKeyAsString());
                 }
